@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="kk">
 <head>
 <meta charset="UTF-8">
@@ -25,6 +25,7 @@ body{
 
 
 .card{
+    display:none;
     background:white;
     padding:40px;
     border-radius:25px;
@@ -198,14 +199,129 @@ to{
 opacity:1;
 }
 }
+    
+#loading{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:linear-gradient(135deg,#ffe6eb,#fff);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:10;
+}
 
+
+#loading button{
+    background:#ff4d6d;
+    color:white;
+}
+
+
+.fade{
+    animation:fade 1s forwards;
+}
+
+
+@keyframes fade{
+
+from{
+opacity:1;
+}
+
+to{
+opacity:0;
+}
+
+}
+
+
+.progress-hearts{
+    font-size:30px;
+    margin:20px;
+    letter-spacing:5px;
+}
+
+.progress-hearts::after{
+    content:"";
+    animation:loadingHeart 5s linear infinite;
+}
+
+
+@keyframes loadingHeart{
+
+0%{
+content:"❤️";
+}
+
+20%{
+content:"❤️❤️";
+}
+
+40%{
+content:"❤️❤️❤️❤️";
+}
+
+60%{
+content:"❤️❤️❤️❤️❤️❤️";
+}
+
+80%{
+content:"❤️❤️❤️❤️❤️❤️❤️❤️";
+}
+
+100%{
+content:"❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️";
+}
+
+}
+
+
+@keyframes heartLoad{
+
+0%{
+    transform:scale(1);
+    opacity:.5;
+}
+
+50%{
+    transform:scale(1.2);
+    opacity:1;
+}
+
+100%{
+    transform:scale(1);
+    opacity:.5;
+}
+
+}
 </style>
 
 </head>
 
 
 <body>
+    
+<div id="loading">
 
+<h1>Ақ Мерейім ❤️</h1>
+
+<p id="loadText">
+Қанекей, мені басшы ❤️
+</p>
+
+
+<div class="progress-hearts">
+❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️
+</div>
+
+
+<button onclick="startLove()">
+Басайын ❤️
+</button>
+
+</div>
 
 <div class="card">
 
@@ -360,6 +476,70 @@ heart.remove();
 },4000);
 
 }
+
+}
+
+
+function startLove(){
+
+
+for(let i=0;i<30;i++){
+
+let h=document.createElement("div");
+h.innerHTML="❤️";
+h.className="heart";
+
+h.style.left=Math.random()*100+"vw";
+h.style.bottom="0px";
+
+document.body.appendChild(h);
+
+setTimeout(()=>{
+h.remove();
+},3000);
+
+}
+
+
+let loading=document.getElementById("loading");
+let text=document.getElementById("loadText");
+
+let words=[
+"Сен басып қойдың ғой 😳❤️",
+"Жүрек дайындалып жатыр...",
+"Кішкентай тосынсый жүктелуде ✨",
+"Ақ Мерейімнің күлкі режимі қосылды 😊",
+"Барлығы сен үшін дайын ❤️"
+];
+
+let i=0;
+
+
+let timer=setInterval(()=>{
+
+text.innerHTML=words[i];
+
+i++;
+
+
+if(i==words.length){
+
+clearInterval(timer);
+
+loading.classList.add("fade");
+
+
+setTimeout(()=>{
+
+loading.style.display="none";
+document.querySelector(".card").style.display="block";
+
+},1000);
+
+}
+
+},1000);
+
 
 
 }
